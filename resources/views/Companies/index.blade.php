@@ -41,7 +41,7 @@
 <a class="btn btn-primary" href="{{ route('companies.edit',$company->id) }}">Edit</a>
 @csrf
 @method('DELETE')
-<button type="submit" class="btn btn-danger">Delete</button>
+<button type="submit" class="btn btn-danger show-alert-delete-box">Delete</button>
 </form>
 </td>
 </tr>
@@ -49,4 +49,28 @@
 </table>
 {!! $companies->links()!!}
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+    $('.show-alert-delete-box').click(function(event){
+        var form =  $(this).closest("form");
+        var name = $(this).data("name");
+        event.preventDefault();
+        swal({
+            title: "Are you sure you want to delete this record?",
+            text: "If you delete this, it will be gone forever.",
+            icon: "warning",
+            type: "warning",
+            buttons: ["Cancel","Yes!"],
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((willDelete) => {
+            if (willDelete) {
+                form.submit();
+            }
+        });
+    });
+</script>
 </html>
